@@ -257,7 +257,6 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
                   ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
                   : `${color.bg} hover:opacity-90 text-white shadow-lg shadow-${color.bg.replace('bg-', '')}/30`
               } px-6 flex-1 sm:flex-none order-1 sm:order-2`}
-              disabled={hayChoque || sinCupo}
             >
               {hayChoque ? (
                 <>
