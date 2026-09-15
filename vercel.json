@@ -1,7 +1,7 @@
 {
   "framework": "vite",
-  "installCommand": "npm install --include=optional --foreground-scripts=false",
-  "buildCommand": "npm run build",
+  "installCommand": "CI=true npm install --include=optional --foreground-scripts=false --no-audit --no-fund",
+  "buildCommand": "CI=true npm run build -- --emptyOutDir",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
