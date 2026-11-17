@@ -17,7 +17,17 @@ export default function Header({ estudiante, tiempoFormato, critico }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <a
+              href="/respuestas.html"
+              title="Ver respuestas de la experiencia"
+              className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-2.5 py-2 text-xs sm:text-sm font-medium transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
+              </svg>
+              <span className="hidden sm:inline">Respuestas</span>
+            </a>
             <div className="hidden sm:flex flex-col items-end bg-red-600/90 rounded-lg px-3 py-1.5 border border-red-300/40 shadow-inner">
               <div className="text-[11px] text-red-50 flex items-center gap-1">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

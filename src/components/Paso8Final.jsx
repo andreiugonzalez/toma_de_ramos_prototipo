@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { ESTUDIANTE } from '../data/asignaturas.js';
-import { guardarFeedback, firebaseConfigurado } from '../firebase.js';
+import { guardarFeedback } from '../firebase.js';
 
 export default function Paso8Final({ planId, resumen, onVolverInicio }) {
   const [nombre, setNombre] = useState('');
+  const [carrera, setCarrera] = useState('');
   const [calificacion, setCalificacion] = useState(0);
   const [hover, setHover] = useState(0);
   const [comentarios, setComentarios] = useState('');
@@ -16,6 +17,7 @@ export default function Paso8Final({ planId, resumen, onVolverInicio }) {
     try {
       const res = await guardarFeedback({
         nombre: nombre.trim() || 'Anónimo',
+        carrera: carrera.trim(),
         calificacion,
         comentarios: comentarios.trim(),
         plan: planId,
@@ -58,11 +60,9 @@ export default function Paso8Final({ planId, resumen, onVolverInicio }) {
             {resultado === 'error' ? 'No se pudo enviar' : '¡Gracias por tu respuesta!'}
           </h2>
           <p className="text-sm text-slate-500 mb-6">
-            {resultado === 'firebase'
-              ? 'Tu retroalimentación fue registrada correctamente.'
-              : resultado === 'local'
-              ? 'Tu retroalimentación fue guardada localmente (Firebase no está configurado).'
-              : 'Ocurrió un problema al guardar. Intenta nuevamente.'}
+            {resultado === 'error'
+              ? 'Ocurrió un problema al guardar. Intenta nuevamente.'
+              : 'Tu retroalimentación fue registrada correctamente.'}
           </p>
           <button onClick={onVolverInicio} className="btn-secondary text-sm mx-auto">Volver al inicio</button>
         </div>
@@ -77,6 +77,19 @@ export default function Paso8Final({ planId, resumen, onVolverInicio }) {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Tu nombre"
+              className="input-field"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+              Carrera <span className="text-slate-400 font-normal">(opcional)</span>
+            </label>
+            <input
+              type="text"
+              value={carrera}
+              onChange={(e) => setCarrera(e.target.value)}
+              placeholder="Ej: Ingeniería en Programación"
               className="input-field"
             />
           </div>
@@ -120,13 +133,8 @@ export default function Paso8Final({ planId, resumen, onVolverInicio }) {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
-            <p className="text-[11px] text-slate-400">
-              {firebaseConfigurado
-                ? 'Los datos se almacenan en Firebase (Firestore).'
-                : 'Firebase no está configurado: los datos se guardarán en este navegador.'}
-            </p>
-            <button type="submit" disabled={enviando} className="btn-primary text-sm px-6">
+          <div className="flex justify-center sm:justify-end pt-2">
+            <button type="submit" disabled={enviando} className="btn-primary text-sm px-6 w-full sm:w-auto">
               {enviando ? 'Enviando...' : 'Enviar retroalimentación'}
             </button>
           </div>

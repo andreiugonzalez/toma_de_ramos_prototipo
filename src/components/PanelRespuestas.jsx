@@ -91,7 +91,17 @@ function TarjetaRespuesta({ r }) {
           <div className={`font-bold truncate ${anonimo ? 'text-slate-400 italic' : 'text-slate-800'}`}>
             {nombre}
           </div>
-          {fecha && <div className="text-xs text-slate-400">{fecha}</div>}
+          <div className="flex items-center gap-1.5 text-xs text-slate-400 min-w-0">
+            {r.carrera && (
+              <>
+                <span className="text-primary-600 font-semibold truncate" title={r.carrera}>
+                  {r.carrera}
+                </span>
+                {fecha && <span className="text-slate-300 flex-shrink-0">•</span>}
+              </>
+            )}
+            {fecha && <span className="truncate">{fecha}</span>}
+          </div>
         </div>
       </div>
 
