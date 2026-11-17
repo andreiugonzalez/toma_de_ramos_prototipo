@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { DIAS, HORAS, TIPOS_ASIGNATURA, TIPOS_SECCION } from '../data/asignaturas.js';
 import { getColorPorAsignatura } from './HorarioSemanal.jsx';
 
-export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQuitar }) {
-  const { asignatura, seccion, seleccionada, hayChoque, sinCupo } = data;
+export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQuitar, textoAccion = 'Marcar sección' }) {
+  const { asignatura, seccion, seleccionada, hayChoque, sinCupo, suspendida } = data;
   const color = getColorPorAsignatura(asignatura.id);
 
   useEffect(() => {
@@ -14,8 +14,12 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
 
   const disponibilidad = seccion.cuposDisponibles;
   const total = seccion.cupos;
-  const porcentajeDisp = (disponibilidad / total) * 100;
-  const disponibilidadColor = porcentajeDisp > 40 ? 'emerald' : porcentajeDisp > 15 ? 'amber' : 'red';
+  const porcentajeDisp = total > 0 ? (disponibilidad / total) * 100 : 0;
+  const colorBarra = porcentajeDisp > 40
+    ? { barra: 'bg-emerald-500', texto: 'text-emerald-600' }
+    : porcentajeDisp > 15
+    ? { barra: 'bg-amber-500', texto: 'text-amber-600' }
+    : { barra: 'bg-red-500', texto: 'text-red-600' };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
@@ -91,6 +95,11 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
             {sinCupo && (
               <span className="chip bg-slate-700 text-white shadow-md">
                 Sin cupos disponibles
+              </span>
+            )}
+            {suspendida && (
+              <span className="chip bg-red-600 text-white shadow-md">
+                Sección suspendida
               </span>
             )}
             {porcentajeDisp <= 20 && !sinCupo && !hayChoque && !seleccionada && (
@@ -205,20 +214,20 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
                 <h3 className="text-lg font-bold text-slate-800">Disponibilidad de cupos</h3>
               </div>
               <div className="text-lg font-black text-slate-800 font-mono">
-                <span className={`text-${disponibilidadColor}-600`}>{disponibilidad}</span>
+                <span className={colorBarra.texto}>{disponibilidad}</span>
                 <span className="text-slate-400 mx-0.5">/</span>
                 <span>{total}</span>
               </div>
             </div>
             <div className="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
               <div
-                className={`h-full bg-${disponibilidadColor}-500 transition-all duration-700`}
+                className={`h-full ${colorBarra.barra} transition-all duration-700`}
                 style={{ width: `${porcentajeDisp}%` }}
               />
             </div>
             <div className="flex justify-between mt-2 text-xs">
               <span className="text-slate-500">
-                <span className={`font-semibold text-${disponibilidadColor}-600`}>
+                <span className={`font-semibold ${colorBarra.texto}`}>
                   {porcentajeDisp.toFixed(0)}% disponible
                 </span>
               </span>
@@ -249,16 +258,20 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
           ) : (
             <button
               onClick={onSeleccionar}
-              disabled={hayChoque || sinCupo}
+              disabled={hayChoque || sinCupo || suspendida}
               className={`btn ${
-                hayChoque
+                suspendida
+                  ? 'bg-red-100 text-red-700 border border-red-200 cursor-not-allowed'
+                  : hayChoque
                   ? 'bg-red-100 text-red-700 border border-red-200 cursor-not-allowed'
                   : sinCupo
                   ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
-                  : `${color.bg} hover:opacity-90 text-white shadow-lg shadow-${color.bg.replace('bg-', '')}/30`
+                  : `${color.bg} hover:opacity-90 text-white shadow-lg`
               } px-6 flex-1 sm:flex-none order-1 sm:order-2`}
             >
-              {hayChoque ? (
+              {suspendida ? (
+                'Sección suspendida'
+              ) : hayChoque ? (
                 <>
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -272,7 +285,7 @@ export default function ModalDetalleSeccion({ data, onClose, onSeleccionar, onQu
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
-                  Seleccionar sección
+                  {textoAccion}
                 </>
               )}
             </button>

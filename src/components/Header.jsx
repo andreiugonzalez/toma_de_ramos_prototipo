@@ -1,55 +1,67 @@
-export default function Header() {
+export default function Header({ estudiante, tiempoFormato, critico }) {
   return (
     <header className="bg-gradient-to-r from-ucenslate via-ucenslate-light to-ucenslate text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md">
-              <div className="text-ucenslate font-black text-xl leading-tight text-center">
+        <div className="flex items-center justify-between gap-3 py-3 sm:py-4">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <div className="w-11 h-11 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
+              <div className="text-ucenslate font-black text-base sm:text-xl leading-tight text-center">
                 <div className="tracking-tighter">UCEN</div>
               </div>
             </div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-bold tracking-tight">Universidad Central de Chile</div>
-              <div className="text-blue-100 text-sm">Facultad de Ingeniería y Tecnología</div>
+            <div className="min-w-0">
+              <div className="text-sm sm:text-lg font-bold tracking-tight truncate">
+                {estudiante.universidad}
+              </div>
+              <div className="text-blue-100 text-[11px] sm:text-sm truncate">{estudiante.facultad}</div>
             </div>
           </div>
 
-          <div className="flex flex-col items-end gap-1">
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-white/20">
-                <svg className="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="hidden sm:flex flex-col items-end bg-red-600/90 rounded-lg px-3 py-1.5 border border-red-300/40 shadow-inner">
+              <div className="text-[11px] text-red-50 flex items-center gap-1">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <div className="text-xs">
-                  <div className="text-blue-100">Cierre toma de ramos en:</div>
-                  <div className="font-mono font-bold text-sm text-white">12:45:30</div>
-                </div>
+                Su cita finalizará en:
               </div>
-              <div className="w-10 h-10 rounded-full bg-white/15 border-2 border-white/30 flex items-center justify-center font-bold">
-                JS
+              <div className={`font-mono font-black text-lg leading-tight ${critico ? 'animate-pulse' : ''}`}>
+                {tiempoFormato}
               </div>
             </div>
-            <div className="text-xs text-blue-100 hidden md:block">
-              <span className="font-semibold text-white">Periodo:</span> 2025-02 / 1 ·
-              <span className="font-semibold text-white"> Expediente:</span> 202118457
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/15 border-2 border-white/30 flex items-center justify-center font-bold flex-shrink-0 text-sm sm:text-base">
+              {estudiante.iniciales}
             </div>
           </div>
         </div>
 
-        <div className="pb-4 md:hidden">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20 text-xs">
-            <div className="flex justify-between">
-              <span className="text-blue-100">Plan:</span>
-              <span className="font-semibold">Ing. en Programación 2023</span>
-            </div>
-            <div className="flex justify-between mt-1">
-              <span className="text-blue-100">Cierre en:</span>
-              <span className="font-mono font-bold text-white">12:45:30</span>
-            </div>
+        <div className="sm:hidden pb-3">
+          <div className="bg-red-600/90 rounded-lg px-3 py-1.5 border border-red-300/40 flex items-center justify-between">
+            <span className="text-[11px] text-red-50">Su cita finalizará en:</span>
+            <span className={`font-mono font-black ${critico ? 'animate-pulse' : ''}`}>{tiempoFormato}</span>
           </div>
+        </div>
+
+        <div className="pb-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-2 border-t border-white/10 pt-3">
+          <DatoHeader label="Nombre" valor={estudiante.nombre} className="col-span-2 lg:col-span-1" />
+          <DatoHeader label="Plan" valor={estudiante.plan} className="col-span-2 lg:col-span-1" />
+          <DatoHeader label="Escuela" valor={estudiante.escuela} className="col-span-2 lg:col-span-1" />
+          <DatoHeader label="Última modificación" valor={estudiante.ultimaModificacion} />
+          <DatoHeader label="Periodo de Matrícula" valor={estudiante.periodoMatricula} />
+          <DatoHeader label="Expediente" valor={estudiante.expediente} />
         </div>
       </div>
     </header>
+  );
+}
+
+function DatoHeader({ label, valor, className = '' }) {
+  return (
+    <div className={`min-w-0 ${className}`}>
+      <div className="text-[10px] uppercase tracking-wide text-blue-200 font-semibold">{label}</div>
+      <div className="text-xs sm:text-[13px] font-semibold text-white truncate" title={valor}>
+        {valor}
+      </div>
+    </div>
   );
 }

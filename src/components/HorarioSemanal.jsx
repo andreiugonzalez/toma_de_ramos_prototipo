@@ -81,6 +81,12 @@ export default function HorarioSemanal({ seccionesSeleccionadas, asignaturas, se
             </span>
           ))}
         </div>
+        <div className="md:hidden flex items-center gap-1 text-[11px] text-primary-600 font-semibold whitespace-nowrap">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4M4 17h12m0 0l-4-4m4 4l-4 4" />
+          </svg>
+          Desliza
+        </div>
       </div>
 
       <div className="overflow-x-auto">

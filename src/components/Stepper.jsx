@@ -1,19 +1,15 @@
-const PASOS = [
-  { id: 1, nombre: 'Bienvenida', descripcion: 'Datos personales' },
-  { id: 2, nombre: 'Plan de Estudios', descripcion: 'Selecciona tu plan' },
-  { id: 3, nombre: 'Asignaturas', descripcion: 'Elige ramos' },
-  { id: 4, nombre: 'Secciones y Horario', descripcion: 'Elige secciones' },
-  { id: 5, nombre: 'Resumen', descripcion: 'Confirma tu selección' }
-];
+import { PASOS } from '../data/asignaturas.js';
 
 export default function Stepper({ pasoActual, onCambiarPaso }) {
+  const pasoInfo = PASOS.find(p => p.id === pasoActual);
+
   return (
-    <div className="w-full px-4 py-6">
-      <div className="max-w-5xl mx-auto">
+    <div className="w-full px-3 sm:px-4 py-4 sm:py-5 bg-white border-b border-slate-100">
+      <div className="max-w-6xl mx-auto">
         <div className="flex items-start justify-between relative">
-          <div className="absolute top-5 left-0 right-0 h-0.5 bg-slate-200 -z-0" />
+          <div className="absolute top-[13px] sm:top-[15px] left-0 right-0 h-0.5 bg-slate-200" />
           <div
-            className="absolute top-5 left-0 h-0.5 bg-primary-600 transition-all duration-500 -z-0"
+            className="absolute top-[13px] sm:top-[15px] left-0 h-0.5 bg-primary-600 transition-all duration-500"
             style={{ width: `${((pasoActual - 1) / (PASOS.length - 1)) * 100}%` }}
           />
 
@@ -23,39 +19,43 @@ export default function Stepper({ pasoActual, onCambiarPaso }) {
             const isClickable = paso.id <= pasoActual;
 
             return (
-              <div
+              <button
                 key={paso.id}
-                className={`flex flex-col items-center relative z-10 flex-1 ${isClickable ? 'cursor-pointer' : 'cursor-default'}`}
+                type="button"
                 onClick={() => isClickable && onCambiarPaso(paso.id)}
+                aria-label={`Paso ${paso.id}: ${paso.nombre}`}
+                className={`flex flex-col items-center relative z-10 flex-1 px-0.5 bg-transparent ${isClickable ? 'cursor-pointer' : 'cursor-default'}`}
               >
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all duration-300 ${
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs border-2 transition-all duration-300 ${
                     isCompletado
                       ? 'bg-primary-600 border-primary-600 text-white'
                       : isActivo
-                      ? 'bg-white border-primary-600 text-primary-600 ring-4 ring-primary-100 shadow-glow'
+                      ? 'bg-white border-primary-600 text-primary-600 ring-4 ring-primary-100'
                       : 'bg-white border-slate-300 text-slate-400'
                   }`}
                 >
                   {isCompletado ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
                     paso.id
                   )}
                 </div>
-                <div className={`mt-2 text-center max-w-28 px-1 ${isActivo ? 'opacity-100' : isCompletado ? 'opacity-90' : 'opacity-60'}`}>
-                  <div className={`text-xs font-semibold ${isActivo ? 'text-primary-700' : 'text-slate-700'}`}>
+                <div className="mt-2 text-center w-full px-0.5 hidden sm:block">
+                  <div className={`text-[10px] sm:text-[11px] font-semibold leading-tight ${isActivo ? 'text-primary-700' : 'text-slate-600'}`}>
                     {paso.nombre}
                   </div>
-                  <div className="text-[11px] text-slate-500 mt-0.5 hidden sm:block">
-                    {paso.descripcion}
-                  </div>
                 </div>
-              </div>
+              </button>
             );
           })}
+        </div>
+
+        <div className="sm:hidden mt-3 text-center">
+          <span className="text-sm font-bold text-primary-700">Paso {pasoActual} de {PASOS.length}</span>
+          {pasoInfo && <span className="text-sm text-slate-500"> · {pasoInfo.nombre}</span>}
         </div>
       </div>
     </div>

@@ -38,11 +38,48 @@ export const PROFESORES = [
 ];
 
 export const PASOS = [
-  { id: 1, nombre: 'Bienvenida', descripcion: 'Datos personales' },
-  { id: 2, nombre: 'Plan de Estudios', descripcion: 'Selecciona tu plan' },
-  { id: 3, nombre: 'Asignaturas', descripcion: 'Elige ramos' },
-  { id: 4, nombre: 'Secciones y Horario', descripcion: 'Elige secciones' },
-  { id: 5, nombre: 'Resumen', descripcion: 'Confirma tu selección' }
+  { id: 1, nombre: 'Bienvenida', descripcion: 'Inicio del proceso' },
+  { id: 2, nombre: 'Datos Personales', descripcion: 'Verifica tus datos' },
+  { id: 3, nombre: 'Plan de Estudios', descripcion: 'Selecciona tu plan' },
+  { id: 4, nombre: 'Asignaturas', descripcion: 'Elige tus ramos' },
+  { id: 5, nombre: 'Secciones y Horario', descripcion: 'Elige secciones' },
+  { id: 6, nombre: 'Resumen', descripcion: 'Revisa tu selección' },
+  { id: 7, nombre: 'Confirmación', descripcion: 'Confirma tu inscripción' },
+  { id: 8, nombre: 'Final', descripcion: 'Comparte tu experiencia' }
+];
+
+export const ESTUDIANTE = {
+  nombre: 'Juan Ignacio Soto Ramírez',
+  rut: '20.118.457-3',
+  iniciales: 'JS',
+  plan: 'Ingeniería en Programación 2023',
+  escuela: 'Escuela de Ingeniería en Programación',
+  facultad: 'Facultad de Ingeniería y Tecnología',
+  universidad: 'Universidad Central de Chile',
+  ultimaModificacion: '15/11/2026 22:14',
+  periodoMatricula: '2026-02 / 1',
+  expediente: '202118457',
+  duracionCitaMin: 15
+};
+
+export const PLANES = [
+  {
+    id: 'IP2023',
+    codigo: '[IP23]',
+    nombre: 'INGENIERÍA EN PROGRAMACIÓN PLAN 2023',
+    facultad: 'Facultad de Ingeniería y Tecnología',
+    totalCreditos: 380,
+    creditosMaxSemestre: 35,
+    matriculable: true,
+    estado: 'Vigente'
+  }
+];
+
+export const NOTAS_PLAN_ESTUDIOS = [
+  'Puedes matricularte únicamente en el plan de estudios que tengas formalmente asignado. Si no aparece el plan correcto, contacta a tu Escuela antes de continuar.',
+  'La toma de ramos requiere estar al día en el pago de aranceles y matrícula. De existir una restricción financiera, el sistema bloqueará la inscripción de asignaturas.',
+  'Los estudiantes con suspensión vigente, licencia médica o causal disciplinaria deberán regularizar su situación en la Secretaría de Estudios.',
+  'La selección de asignaturas de planes en extinción está sujeta a la disponibilidad de secciones y a la autorización de la Escuela.'
 ];
 
 export const ASIGNATURAS = [
@@ -95,41 +132,6 @@ export const ASIGNATURAS = [
     ]
   },
   {
-    id: 'PRO102',
-    codigo: 'PRO102',
-    nombre: 'Estructuras de Datos',
-    tipo: 'OBLIGATORIA',
-    curso: 1,
-    creditos: 6,
-    secciones: [
-      {
-        id: 'PRO102-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Dra. Ana Pavez',
-        sala: 'A-201',
-        cupos: 45,
-        cuposDisponibles: 40,
-        horarios: [
-          { dia: 0, horaInicio: 3, duracion: 3 },
-          { dia: 2, horaInicio: 3, duracion: 2 }
-        ]
-      },
-      {
-        id: 'PRO102-2',
-        codigo: 'LAB-1',
-        tipo: 'LABORATORIO',
-        profesor: 'Ing. Juan Torres',
-        sala: 'Lab-02',
-        cupos: 30,
-        cuposDisponibles: 25,
-        horarios: [
-          { dia: 1, horaInicio: 6, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
     id: 'MAT101',
     codigo: 'MAT101',
     nombre: 'Matemáticas I',
@@ -166,186 +168,9 @@ export const ASIGNATURAS = [
     ]
   },
   {
-    id: 'FIS101',
-    codigo: 'FIS101',
-    nombre: 'Física I',
-    tipo: 'OBLIGATORIA',
-    curso: 1,
-    creditos: 6,
-    secciones: [
-      {
-        id: 'FIS101-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Dra. Paula Herrera',
-        sala: 'Auditorio',
-        cupos: 60,
-        cuposDisponibles: 45,
-        horarios: [
-          { dia: 2, horaInicio: 6, duracion: 3 },
-          { dia: 4, horaInicio: 0, duracion: 2 }
-        ]
-      },
-      {
-        id: 'FIS101-2',
-        codigo: 'LAB-1',
-        tipo: 'LABORATORIO',
-        profesor: 'Ing. Diego Fernández',
-        sala: 'Lab-03',
-        cupos: 25,
-        cuposDisponibles: 20,
-        horarios: [
-          { dia: 5, horaInicio: 0, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'PRO201',
-    codigo: 'PRO201',
-    nombre: 'Programación II (POO)',
-    tipo: 'OBLIGATORIA',
-    curso: 2,
-    creditos: 6,
-    secciones: [
-      {
-        id: 'PRO201-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Ing. María González',
-        sala: 'A-202',
-        cupos: 45,
-        cuposDisponibles: 5,
-        horarios: [
-          { dia: 1, horaInicio: 9, duracion: 3 },
-          { dia: 3, horaInicio: 9, duracion: 2 }
-        ]
-      },
-      {
-        id: 'PRO201-2',
-        codigo: 'TEO-2',
-        tipo: 'TEORIA',
-        profesor: 'Ing. Cristian López',
-        sala: 'A-101',
-        cupos: 45,
-        cuposDisponibles: 22,
-        horarios: [
-          { dia: 0, horaInicio: 9, duracion: 3 },
-          { dia: 2, horaInicio: 9, duracion: 2 }
-        ]
-      },
-      {
-        id: 'PRO201-3',
-        codigo: 'TAL-1',
-        tipo: 'TALLER',
-        profesor: 'Mg. Sofía Ramírez',
-        sala: 'Lab-01',
-        cupos: 30,
-        cuposDisponibles: 15,
-        horarios: [
-          { dia: 4, horaInicio: 9, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'BDA201',
-    codigo: 'BDA201',
-    nombre: 'Bases de Datos',
-    tipo: 'OBLIGATORIA',
-    curso: 2,
-    creditos: 6,
-    secciones: [
-      {
-        id: 'BDA201-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Ing. Diego Fernández',
-        sala: 'A-201',
-        cupos: 45,
-        cuposDisponibles: 35,
-        horarios: [
-          { dia: 0, horaInicio: 6, duracion: 2 },
-          { dia: 2, horaInicio: 6, duracion: 3 }
-        ]
-      },
-      {
-        id: 'BDA201-2',
-        codigo: 'LAB-1',
-        tipo: 'LABORATORIO',
-        profesor: 'Ing. Juan Torres',
-        sala: 'Lab-02',
-        cupos: 30,
-        cuposDisponibles: 28,
-        horarios: [
-          { dia: 3, horaInicio: 6, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'ARQ201',
-    codigo: 'ARQ201',
-    nombre: 'Arquitectura de Computadores',
-    tipo: 'OBLIGATORIA',
-    curso: 2,
-    creditos: 5,
-    secciones: [
-      {
-        id: 'ARQ201-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Dr. Carlos Mendoza',
-        sala: 'B-101',
-        cupos: 45,
-        cuposDisponibles: 38,
-        horarios: [
-          { dia: 1, horaInicio: 6, duracion: 2 },
-          { dia: 4, horaInicio: 9, duracion: 2 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'ING201',
-    codigo: 'ING201',
-    nombre: 'Inglés Técnico',
-    tipo: 'OBLIGATORIA',
-    curso: 2,
-    creditos: 4,
-    secciones: [
-      {
-        id: 'ING201-1',
-        codigo: 'TAL-1',
-        tipo: 'TALLER',
-        profesor: 'Mg. Sofía Ramírez',
-        sala: 'Sala Múltiple',
-        cupos: 35,
-        cuposDisponibles: 2,
-        horarios: [
-          { dia: 0, horaInicio: 3, duracion: 2 },
-          { dia: 2, horaInicio: 3, duracion: 2 }
-        ]
-      },
-      {
-        id: 'ING201-2',
-        codigo: 'TAL-2',
-        tipo: 'TALLER',
-        profesor: 'Dra. Paula Herrera',
-        sala: 'Sala Múltiple',
-        cupos: 35,
-        cuposDisponibles: 30,
-        horarios: [
-          { dia: 3, horaInicio: 3, duracion: 2 },
-          { dia: 4, horaInicio: 3, duracion: 2 }
-        ]
-      }
-    ]
-  },
-  {
     id: 'ELE301',
     codigo: 'ELE301',
-    nombre: 'Desarrollo Web Full Stack',
+    nombre: 'Taller de Desarrollo Web Full Stack',
     tipo: 'ELECTIVA',
     curso: 3,
     creditos: 5,
@@ -361,85 +186,6 @@ export const ASIGNATURAS = [
         horarios: [
           { dia: 1, horaInicio: 9, duracion: 2 },
           { dia: 3, horaInicio: 9, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'ELE302',
-    codigo: 'ELE302',
-    nombre: 'Inteligencia Artificial',
-    tipo: 'ELECTIVA',
-    curso: 3,
-    creditos: 5,
-    secciones: [
-      {
-        id: 'ELE302-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Dra. Ana Pavez',
-        sala: 'A-202',
-        cupos: 40,
-        cuposDisponibles: 36,
-        horarios: [
-          { dia: 0, horaInicio: 9, duracion: 3 },
-          { dia: 2, horaInicio: 9, duracion: 2 }
-        ]
-      },
-      {
-        id: 'ELE302-2',
-        codigo: 'LAB-1',
-        tipo: 'LABORATORIO',
-        profesor: 'Ing. Roberto Silva',
-        sala: 'Lab-01',
-        cupos: 25,
-        cuposDisponibles: 22,
-        horarios: [
-          { dia: 4, horaInicio: 6, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'LIB001',
-    codigo: 'LIB001',
-    nombre: 'Emprendimiento e Innovación',
-    tipo: 'LIBRE',
-    curso: 0,
-    creditos: 3,
-    secciones: [
-      {
-        id: 'LIB001-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Mg. Laura Rojas',
-        sala: 'Auditorio',
-        cupos: 80,
-        cuposDisponibles: 65,
-        horarios: [
-          { dia: 5, horaInicio: 4, duracion: 3 }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'LIB002',
-    codigo: 'LIB002',
-    nombre: 'Psicología General',
-    tipo: 'LIBRE',
-    curso: 0,
-    creditos: 3,
-    secciones: [
-      {
-        id: 'LIB002-1',
-        codigo: 'TEO-1',
-        tipo: 'TEORIA',
-        profesor: 'Dra. Paula Herrera',
-        sala: 'B-101',
-        cupos: 60,
-        cuposDisponibles: 58,
-        horarios: [
-          { dia: 2, horaInicio: 9, duracion: 3 }
         ]
       }
     ]
